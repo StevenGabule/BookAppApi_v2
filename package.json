@@ -5,12 +5,19 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --exec babel-node ./api/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rm -rf ./build && babel -d ./build ./api -s",
+    "generate-lcov": "nyc report --reporter=text-lcov > lcov.info",
+    "coveralls-coverage": "coveralls < lcov.info",
+    "codeclimate-coverage": "codeclimate-test-reporter < lcov.info",
+    "coverage": "nyc npm test && npm run generate-lcov && npm run coveralls-coverage && npm run codeclimate-coverage",
+    "test": "cross-env NODE_ENV=\"test\" && sequelize db:migrate:undo:all && sequelize db:migrate && nyc --require @babel/register mocha ./api/test/test.js --timeout 20000 --exit"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "codeclimate-test-reporter": "^0.5.1",
+    "coveralls": "^3.1.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "path": "^0.12.7",
