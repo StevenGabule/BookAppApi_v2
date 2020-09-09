@@ -61,4 +61,19 @@ Object.keys(db).forEach((modelName) => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+db.user = require("../models/user")(sequelize, Sequelize);
+db.book = require("../models/book")(sequelize, Sequelize);
+
+db.book.belongsToMany(db.user, {
+  through: "user_books",
+  foreignKey: "bookId",
+  otherKey: "userId",
+});
+
+db.user.belongsToMany(db.book, {
+  through: "user_books",
+  foreignKey: "userId",
+  otherKey: "bookId",
+});
+
 export default db;
