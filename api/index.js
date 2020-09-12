@@ -2,10 +2,16 @@ import config from "dotenv";
 import express from "express";
 import BookRoutes from "./server/routes/BookRoutes";
 import UserRoutes from "./server/routes/UserRoutes";
+import cors from "cors";
 
 config.config();
 
 const app = express();
+const corsOptions = {
+  origin: "http://localhost:3000",
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 const port = process.env.PORT || 8000;

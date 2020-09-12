@@ -6,9 +6,23 @@ module.exports = (sequelize, DataTypes) => {
       title: DataTypes.STRING,
       price: DataTypes.STRING,
       description: DataTypes.STRING,
+      userId: DataTypes.INTEGER,
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+      },
     },
     {}
   );
-  Book.associate = function (models) {};
+  Book.associate = function ({ User }) {
+    Book.belongsTo(User, {
+      onDelete: "CASCADE",
+      foreignKey: "userId",
+    });
+  };
   return Book;
 };

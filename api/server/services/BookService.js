@@ -3,7 +3,7 @@ import db from "../src/models";
 class BookService {
   static async getAllBooks() {
     try {
-      return await db.Book.findAll();
+      return await db.Book.findAll({ include: db.User });
     } catch (e) {
       throw e;
     }

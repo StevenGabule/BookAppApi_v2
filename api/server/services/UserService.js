@@ -5,7 +5,9 @@ import jwt from "jsonwebtoken";
 class UserService {
   static async getAllUsers() {
     try {
-      return await db.User.findAll();
+      return await db.User.findAll({
+        include: { model: db.Book, as: "books" },
+      });
     } catch (e) {
       throw e;
     }
@@ -69,8 +71,9 @@ class UserService {
       const user = await db.User.findOne({
         where: { email },
       });
-      console.log(user);
+
       const passwordCheck = bcrypt.compareSync(password, user.password);
+
       if (!passwordCheck) {
         return {
           loggedIn: false,
@@ -82,6 +85,7 @@ class UserService {
       const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY, {
         expiresIn: 86400,
       });
+
       return {
         loggedIn: true,
         id: user.id,

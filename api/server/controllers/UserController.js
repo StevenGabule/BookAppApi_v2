@@ -8,7 +8,7 @@ class UserController {
     try {
       const allBooks = await UserService.getAllUsers();
       if (allBooks.length > 0) {
-        util.setSuccess(200, "Users retrieved", allBooks);
+        util.setSuccess(200, "Users retrieved", allBooks, allBooks.length);
       } else {
         util.setSuccess(200, "No users Found");
       }

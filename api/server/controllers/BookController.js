@@ -8,7 +8,7 @@ class BookController {
     try {
       const allBooks = await BookService.getAllBooks();
       if (allBooks.length > 0) {
-        util.setSuccess(200, "Books retrieved", allBooks);
+        util.setSuccess(200, "Books retrieved", allBooks, allBooks.length);
       } else {
         util.setSuccess(200, "No Book Found");
       }
@@ -20,7 +20,12 @@ class BookController {
   }
 
   static async addBook(req, res) {
-    if (!req.body.title || !req.body.price || !req.body.description) {
+    if (
+      !req.body.title ||
+      !req.body.price ||
+      !req.body.description ||
+      !req.body.userId
+    ) {
       util.setError(400, "Please provide complete details");
       return util.send(res);
     }

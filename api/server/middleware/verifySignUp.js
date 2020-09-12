@@ -1,9 +1,9 @@
 import db from "../src/models";
 
-const User = db.user;
+const User = db.User;
 
 export const checkDuplicateEmail = (req, res, next) => {
-  // check for username duplication
+  // check for email duplication
   User.findOne({
     where: {
       email: req.body.email,

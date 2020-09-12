@@ -4,12 +4,14 @@ export default class Util {
     this.type = null;
     this.data = null;
     this.message = null;
+    this.count = 0;
   }
-  setSuccess(statusCode, message, data) {
+  setSuccess(statusCode, message, data, count) {
     this.statusCode = statusCode;
     this.message = message;
     this.data = data;
     this.type = "success";
+    this.count = count;
   }
 
   setError(statusCode, message) {
@@ -21,6 +23,7 @@ export default class Util {
   send(res) {
     const result = {
       status: this.type,
+      count: this.count,
       message: this.message,
       data: this.data,
     };
